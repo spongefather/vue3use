@@ -3,6 +3,7 @@
     | <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link> |
     <router-link to="/babylon">Babylon</router-link> |
+    <router-link to="/filament">Filament</router-link> |
     <router-link to="/maps">Maps</router-link> |
   </nav>
   <router-view/>
@@ -43,6 +44,10 @@ html,body,canvas,img {
   color: #2c3e50;
   width: 100%;
   height: 100%;
+}
+
+#app > div {
+  height: calc(100% - 80px);
 }
 
 nav {
