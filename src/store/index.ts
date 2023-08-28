@@ -1,6 +1,6 @@
 import { createStore, Store, Module } from 'vuex'
 import { InjectionKey } from 'vue'
-import { app, AppType } from './module/app'
+import { app } from './module/app'
 
 export interface MapInfo {
   [key:string] : any

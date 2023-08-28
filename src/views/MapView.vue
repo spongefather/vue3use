@@ -9,10 +9,6 @@
   </div>
 </template>
 <script setup lang="ts">
-// import { Options, Vue } from 'vue-class-component'
-
-// @Options({})
-// export default class MapView extends Vue {}
 </script>
 <style>
 .maps,.container{

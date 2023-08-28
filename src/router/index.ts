@@ -4,6 +4,8 @@ import MapView from '@/views/MapView.vue'
 import { key } from '../store'
 import { useStore } from 'vuex'
 
+MapView.displayName = 'mapViewWarpper'
+
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
@@ -47,7 +49,8 @@ router.afterEach(
   (to, from, failure) => {
     // store.state.app.switch = false
     const store = useStore(key)
-    console.log(store.state.app.switch)
+    // console.log(store.state.app.switch)
+    store.dispatch('app/afterLoad')
     // store.state.state.switch = false
   }
 )
@@ -55,7 +58,8 @@ router.afterEach(
 router.beforeEach(
   (to, from, next) => {
     const store = useStore(key)
-    console.log(store.state.app.switch)
+    // console.log(store.state.app.switch)
+    store.dispatch('app/beforeLoad')
     next()
   }
 )

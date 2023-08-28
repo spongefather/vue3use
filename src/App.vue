@@ -1,4 +1,9 @@
 <template>
+  <div id="loading" >
+    <!-- v-if="switching" -->
+    <img alt="loading photo" src="./assets/loading-spinner-svgrepo-com.svg" />
+    <div>FILE LOADING</div>
+  </div>
   <nav>
     | <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link> |
@@ -9,22 +14,19 @@
 </template>
 <script lang="ts">
 import { Vue, Options } from 'vue-class-component'
-import { useStore } from 'vuex'
-import { key } from './store'
 
 @Options({
-  computed: {
-    switching: {
-      get () {
-        return useStore(key).state
-      },
-      set (val: boolean) {
-        useStore(key).dispatch('/app/setval', val)
+  watch: {
+    '$store.state.app.switch': {
+      handler (nw) {
+        this.switching = nw
       }
     }
   }
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+  switching = true
+}
 </script>
 <style>
 html,body,canvas,img {
@@ -43,6 +45,43 @@ html,body,canvas,img {
   color: #2c3e50;
   width: 100%;
   height: 100%;
+  position: relative;
+}
+
+#loading {
+  width: 100%;
+  height: 100%;
+  background-color: #808080D2;
+  position: absolute;
+}
+
+#loading div {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  line-height: 300px;
+}
+
+#loading img {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: 3s linear 0s infinite load;
+}
+
+@keyframes load {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 nav {
