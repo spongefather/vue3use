@@ -8,6 +8,7 @@
     | <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link> |
     <router-link to="/babylon">Babylon</router-link> |
+    <router-link to="/filament">Filament</router-link> |
     <router-link to="/maps">Maps</router-link> |
   </nav>
   <router-view/>
@@ -82,6 +83,10 @@ html,body,canvas,img {
   100% {
     transform: rotate(360deg);
   }
+}
+
+#app > div {
+  height: calc(100% - 80px);
 }
 
 nav {

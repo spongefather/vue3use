@@ -26,6 +26,11 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import(/* webpackChunkName: "bblview" */ '../views/BabylonView.vue')
   },
   {
+    path: '/filament',
+    name: 'filament',
+    component: () => import(/* webpackChunkName: "fmview" */ '../views/FilamentView.vue')
+  },
+  {
     path: '/maps',
     name: 'maps',
     redirect: '/maps/cesium',
