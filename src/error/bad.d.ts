@@ -11,7 +11,7 @@ import Filament, {
 export interface EmscriptenModuleConfig {
   // can be set
   locateFile?: (fileName: string) => string,
-  print?: Function,
+  print?: () => void,
   arguments?: any,
   thisProgram?: any,
   printErr?: any,

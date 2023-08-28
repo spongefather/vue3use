@@ -1,7 +1,9 @@
 /**
  * copy from filament.js
+ * change some code
  */
 export function badInit(assets, onready, config, Filament) {
+  Filament.View = function () { } // cant find where is this ...
   if (onready) {
     Filament.onReadyListeners.push(onready);
   }
@@ -30,7 +32,7 @@ export function badInit(assets, onready, config, Filament) {
 
   Filament.fetch(assets, null, taskFinished);
   Filament(config).then(m => {
-    Filament = Object.assign(m, Filament);
+    Filament = Object.assign(Filament, m);
     Filament.loadClassExtensions();
     taskFinished();
   });

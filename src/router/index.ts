@@ -1,10 +1,8 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import MapView from '@/views/MapView.vue'
+import MapView from '../views/MapView.vue'
 import { key } from '../store'
 import { useStore } from 'vuex'
-
-MapView.displayName = 'mapViewWarpper'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -34,7 +32,7 @@ const routes: Array<RouteRecordRaw> = [
     path: '/maps',
     name: 'maps',
     redirect: '/maps/cesium',
-    component: () => MapView,
+    component: MapView,
     children: [
       {
         path: '/maps/cesium',

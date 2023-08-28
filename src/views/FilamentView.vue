@@ -7,8 +7,6 @@
 import { Vue, Options } from 'vue-class-component'
 import { badInit, EmscriptenModuleConfig } from '@/error/bad'
 import Filament from 'filament'
-import 'gl-matrix'
-
 
 /**
  * change Filament like this
@@ -21,15 +19,30 @@ import 'gl-matrix'
  * Filament.init should have a paramter
  */
 @Options({
-  mounted() {
-      new Promise(
-        () => {
-          this.build()
-        }
-      )
+  mounted () {
+    new Promise(
+      () => {
+        this.build()
+      }
+    ).catch(
+      (res) => {
+        console.log(res)
+      }
+    )
   },
   unmounted () {
-    this.destroy()
+    new Promise(
+      () => {
+        this.destroy() // destroy error this version ...
+      }
+    ).catch(
+      (res) => {
+        console.log(res)
+      }
+    )
+  },
+  beforeUpdate () {
+    // rebuild the engine ... is use for hotload
   }
 })
 export default class FilamentView extends Vue {
@@ -42,13 +55,15 @@ export default class FilamentView extends Vue {
       this.draw(ele)
     }, this.config, Filament)
   }
+
   draw (ele:HTMLCanvasElement) {
     this.engine = Filament.Engine.create(ele, {
       // scene
     })
   }
+
   destroy () {
-    if(this.engine) {
+    if (this.engine) {
       Filament.Engine.destroy(this.engine)
     }
   }

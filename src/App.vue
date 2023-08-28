@@ -1,9 +1,10 @@
 <template>
-  <div id="loading" >
-    <!-- v-if="switching" -->
-    <img alt="loading photo" src="./assets/loading-spinner-svgrepo-com.svg" />
-    <div>FILE LOADING</div>
-  </div>
+  <section id="loading" v-if="switching">
+    <div class="load_img">
+      <img alt="loading photo" src="./assets/loading-spinner-svgrepo-com.svg" />
+    </div>
+    <div class="load_text">FILE LOADING</div>
+  </section>
   <nav>
     | <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link> |
@@ -49,6 +50,10 @@ html,body,canvas,img {
   position: relative;
 }
 
+#app > div {
+  height: calc(100% - 80px);
+}
+
 #loading {
   width: 100%;
   height: 100%;
@@ -56,7 +61,7 @@ html,body,canvas,img {
   position: absolute;
 }
 
-#loading div {
+.load_text {
   position: absolute;
   width: 300px;
   height: 300px;
@@ -66,14 +71,18 @@ html,body,canvas,img {
   line-height: 300px;
 }
 
-#loading img {
+.load_img > img {
+  animation: 1s linear 0s infinite load;
+  transform-origin: 50% 50%;
+}
+
+.load_img {
   position: absolute;
   width: 300px;
   height: 300px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  animation: 3s linear 0s infinite load;
 }
 
 @keyframes load {
@@ -83,10 +92,6 @@ html,body,canvas,img {
   100% {
     transform: rotate(360deg);
   }
-}
-
-#app > div {
-  height: calc(100% - 80px);
 }
 
 nav {
