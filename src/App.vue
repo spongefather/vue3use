@@ -7,7 +7,7 @@
   </section>
   <nav>
     | <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link> |
+    <router-link to="/sphere">Sphere</router-link> |
     <router-link to="/babylon">Babylon</router-link> |
     <router-link to="/filament">Filament</router-link> |
     <router-link to="/maps">Maps</router-link> |

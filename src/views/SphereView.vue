@@ -25,7 +25,7 @@ const year = new Date().getFullYear()
     }
   }
 })
-export default class HomeView extends Vue {
+export default class SphereView extends Vue {
   initPage () {
     if (view) {
       console.log('init error')

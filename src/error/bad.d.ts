@@ -16,7 +16,18 @@ export interface EmscriptenModuleConfig {
   thisProgram?: any,
   printErr?: any,
   wasmBinary?: any, // downloaded wasm file
+  /**
+   * default true
+   */
   noExitRuntime?: boolean,
+  /**
+   * default 16777216
+   */
+  INITIAL_MEMORY?: number,
+  preRun?: [()=>void],
+  postRun?: [()=>void],
+  monitorRunDependencies?:any,
+  onAbort?:(any)=>void,
 
   // can get
   getInheritedInstanceCount?: any,

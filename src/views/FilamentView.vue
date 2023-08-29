@@ -5,19 +5,9 @@
 </template>
 <script lang="ts">
 import { Vue, Options } from 'vue-class-component'
-import { badInit, EmscriptenModuleConfig } from '@/error/bad'
-import Filament from 'filament'
+import { markRaw } from 'vue'
+import { FilamentEngine } from '@/utils/FilamentUtil'
 
-/**
- * change Filament like this
- * Filament({
- *    locateFile : (file: string, dir:string) => {
- *      console.log(dir + file)
- *      return 'filament.wasm'
- *    }
- *  })
- * Filament.init should have a paramter
- */
 @Options({
   mounted () {
     new Promise(
@@ -43,29 +33,27 @@ import Filament from 'filament'
   },
   beforeUpdate () {
     // rebuild the engine ... is use for hotload
+    new Promise(
+      () => {
+        this.destroy() // destroy error this version ...
+      }
+    ).catch(
+      (res) => {
+        console.log(res)
+      }
+    )
   }
 })
 export default class FilamentView extends Vue {
-  engine: Filament.Engine | null = null
-  config: EmscriptenModuleConfig = {}
-  build () {
-    this.config.locateFile = () => '/filament.wasm'
-    badInit([], () => {
-      const ele: HTMLCanvasElement = document.querySelector('canvas#scene')!
-      this.draw(ele)
-    }, this.config, Filament)
-  }
+  fe: FilamentEngine | undefined
 
-  draw (ele:HTMLCanvasElement) {
-    this.engine = Filament.Engine.create(ele, {
-      // scene
-    })
+  build () {
+    const canv:HTMLCanvasElement = document.querySelector('canvas#scene')!
+    this.fe = markRaw(new FilamentEngine(canv))
   }
 
   destroy () {
-    if (this.engine) {
-      Filament.Engine.destroy(this.engine)
-    }
+    this.fe?.destroy()
   }
 }
 </script>
