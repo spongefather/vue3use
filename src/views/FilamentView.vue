@@ -75,4 +75,4 @@ export default class FilamentView extends Vue {
   height: 100%;
   display: block;
 }
-</style>@/error/bad.js
+</style>

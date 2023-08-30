@@ -1,7 +1,11 @@
 <template>
   <div class="maps">
     <nav>
-      | <router-link to="/maps/cesium">Cesium</router-link> |
+      <span>| </span>
+      <router-link to="/maps/cesium">Cesium</router-link>
+      <span> | </span>
+      <router-link to="/maps/leaflet">Leaflet</router-link>
+      <span> | </span>
     </nav>
     <div class="container">
       <router-view/>
