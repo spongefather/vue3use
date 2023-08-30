@@ -17,15 +17,17 @@ abstract class AbstractFilament implements FilamentUsage {
   running = false
   req: number| undefined
 
-  constructor (ele:HTMLCanvasElement) {
+  constructor (ele:HTMLCanvasElement, tb: Trackball) {
     // do something ...
     this.running = false
-    this.trackball = new Trackball(ele)
+    this.trackball = tb
   }
 
   destroy () {
     this.running = false
+    // release this.trackball
     if (this.engine) {
+      // this.engine ...
       Filament.Engine.destroy(this.engine)
     }
     Object.assign(Filament, { initialized: false })
@@ -48,8 +50,9 @@ abstract class AbstractFilament implements FilamentUsage {
       this.renderer.render(this.swapChain, this.view)
       this.req = window.requestAnimationFrame(this.render)
     } else {
-      if(this.req)
+      if(this.req) {
         window.cancelAnimationFrame(this.req)
+      }
     }
 
   }
@@ -63,8 +66,8 @@ export class FilamentTriangle extends AbstractFilament {
   vb!: Filament.VertexBuffer
   ib!: Filament.IndexBuffer
 
-  constructor (ele:HTMLCanvasElement) {
-    super(ele)
+  constructor (ele:HTMLCanvasElement, tb: Trackball) {
+    super(ele,tb)
     // Object.assign(window, { glMatrix })
     this.canvas = ele
     badInit(['/triangle.filamat'], () => {
@@ -143,8 +146,8 @@ export class FilamentSuzanne extends AbstractFilament {
   canvas:HTMLCanvasElement
   ibl!: Filament.IndirectLight
 
-  constructor (ele:HTMLCanvasElement) {
-    super(ele)
+  constructor (ele:HTMLCanvasElement, tb: Trackball) {
+    super(ele, tb)
     const env = 'venetian_crossroads_2k'
     const iblUrl = `/suzanne/${env}_ibl.ktx`
     const skyUrl = `/suzanne/${env}_skybox.ktx`
