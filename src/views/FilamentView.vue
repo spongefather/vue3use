@@ -24,7 +24,7 @@ import { FilamentSuzanne, FilamentTriangle } from '@/utils/FilamentUtil'
   unmounted () {
     new Promise(
       () => {
-        this.destroy() // destroy error this version ...
+        this.destroy()
       }
     ).catch(
       (res) => {
@@ -32,29 +32,30 @@ import { FilamentSuzanne, FilamentTriangle } from '@/utils/FilamentUtil'
       }
     )
   },
-  beforeUpdate () {
-    // rebuild the engine ... is use for hotload
+  updated() {
     new Promise(
       () => {
-        this.destroy() // destroy error this version ...
+        this.destroy()
+        this.build()
       }
     ).catch(
       (res) => {
         console.log(res)
       }
     )
-  }
+  },
 })
 export default class FilamentView extends Vue {
-  fe: FilamentUsage | undefined
+  fe!: FilamentUsage
 
   build () {
     const canv:HTMLCanvasElement = document.querySelector('canvas#scene')!
     this.fe = markRaw(new FilamentSuzanne(canv))
+    // FilamentSuzanne or FilamentTriangle
   }
 
   destroy () {
-    this.fe?.destroy()
+    this.fe.destroy()
   }
 }
 </script>

@@ -43,10 +43,19 @@ export function badInit (assets, onready, config, Filament) {
     Filament = Object.assign(Filament, m)
     Filament.loadClassExtensions()
     taskFinished()
+  }).catch( e => {
+    console.log(e)
+    // html show error
   })
 }
 
-export const DefaultConfig = {
-  locateFile: () => '/filament.wasm',
-  noExitRuntime: false
+export const DefaultConfig = () => {
+  return {
+    locateFile: () => '/filament.wasm',
+    // noExitRuntime: false,
+    monitorRunDependencies: (id) => {
+      console.log(id)
+    }
+  }
+
 }

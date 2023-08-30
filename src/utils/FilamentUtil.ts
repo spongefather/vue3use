@@ -2,8 +2,10 @@ import { badInit, EmscriptenModuleConfig, DefaultConfig } from '@/error/bad'
 import Filament from 'filament'
 import { mat4 } from 'gl-matrix'
 import { FilamentUsage } from './BaseTypes'
+import Trackball from 'gltumble'
 
 abstract class AbstractFilament implements FilamentUsage {
+  config: EmscriptenModuleConfig = DefaultConfig()
   engine!: Filament.Engine
   scene!: Filament.Scene
   swapChain!: Filament.SwapChain
@@ -13,14 +15,19 @@ abstract class AbstractFilament implements FilamentUsage {
   entity!: Filament.Entity
   running = false
 
+  constructor () {
+    // do something ...
+    this.running = false
+  }
+
   destroy () {
     this.running = false
     if (this.engine) {
       Filament.Engine.destroy(this.engine)
     }
-    // this.config
     Object.assign(Filament, { initialized: false })
-    // unregiste types ?
+    // clean Module config
+    this.config = DefaultConfig()
   }
 
   resize () {
@@ -28,14 +35,17 @@ abstract class AbstractFilament implements FilamentUsage {
   }
 
   render () {
-    const radians = Date.now() / 1000
-    const transform = mat4.fromRotation(mat4.create(), radians, [0, 1, 0])
-    const tcm = this.engine.getTransformManager()
-    const inst = tcm.getInstance(this.entity)
-    tcm.setTransform(inst, transform)
-    inst.delete()
-    this.renderer.render(this.swapChain, this.view)
-    window.requestAnimationFrame(this.render)
+    if(this.running) {
+      const radians = Date.now() / 1000
+      const transform = mat4.fromRotation(mat4.create(), radians, [0, 1, 0])
+      const tcm = this.engine.getTransformManager()
+      const inst = tcm.getInstance(this.entity)
+      tcm.setTransform(inst, transform)
+      inst.delete()
+      this.renderer.render(this.swapChain, this.view)
+      window.requestAnimationFrame(this.render)
+    }
+
   }
 }
 
@@ -44,7 +54,6 @@ abstract class AbstractFilament implements FilamentUsage {
  */
 export class FilamentTriangle extends AbstractFilament {
   canvas:HTMLCanvasElement
-  config: EmscriptenModuleConfig = DefaultConfig
   vb!: Filament.VertexBuffer
   ib!: Filament.IndexBuffer
 
@@ -106,8 +115,8 @@ export class FilamentTriangle extends AbstractFilament {
       this.render = this.render.bind(this)
       this.resize = this.resize.bind(this)
       window.addEventListener('resize', this.resize)
-      window.requestAnimationFrame(this.render)
       this.running = true
+      window.requestAnimationFrame(this.render)
     }, this.config, Filament)
   }
 
@@ -122,11 +131,10 @@ export class FilamentTriangle extends AbstractFilament {
 }
 
 /**
- * gltumble should be used ? for event listen ?
+ * gltumble
  */
 export class FilamentSuzanne extends AbstractFilament {
   canvas:HTMLCanvasElement
-  config: EmscriptenModuleConfig = DefaultConfig
   ibl!: Filament.IndirectLight
 
   constructor (ele:HTMLCanvasElement) {
@@ -153,7 +161,6 @@ export class FilamentSuzanne extends AbstractFilament {
       iblUrl,
       skyUrl
     ], () => {
-      // start to init
       const engine = this.engine = Filament.Engine.create(this.canvas)
       this.scene = engine.createScene()
 
@@ -231,8 +238,12 @@ export class FilamentSuzanne extends AbstractFilament {
       this.render = this.render.bind(this)
       this.resize = this.resize.bind(this)
       window.addEventListener('resize', this.resize)
-      window.requestAnimationFrame(this.render)
       this.running = true
+      window.requestAnimationFrame(this.render)
+
+      const trackball = new Trackball(this.canvas)
+      const mat = trackball.getMatrix()
+      // console.info(`The 4x4 transform looks like: ${mat}.`)
     }, this.config, Filament)
   }
 
