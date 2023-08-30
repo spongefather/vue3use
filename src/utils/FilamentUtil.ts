@@ -1,6 +1,6 @@
 import { badInit, EmscriptenModuleConfig, DefaultConfig } from '@/error/bad'
 import Filament from 'filament'
-import { mat4 } from 'gl-matrix'
+// import { mat4 } from 'gl-matrix'
 import { FilamentUsage } from './BaseTypes'
 import Trackball from 'gltumble'
 
@@ -13,11 +13,14 @@ abstract class AbstractFilament implements FilamentUsage {
   camera!: Filament.Camera
   view!: Filament.View
   entity!: Filament.Entity
+  trackball: Trackball
   running = false
+  req: number| undefined
 
-  constructor () {
+  constructor (ele:HTMLCanvasElement) {
     // do something ...
     this.running = false
+    this.trackball = new Trackball(ele)
   }
 
   destroy () {
@@ -36,14 +39,17 @@ abstract class AbstractFilament implements FilamentUsage {
 
   render () {
     if(this.running) {
-      const radians = Date.now() / 1000
-      const transform = mat4.fromRotation(mat4.create(), radians, [0, 1, 0])
+      // const radians = Date.now() / 1000
+      // const transform = mat4.fromRotation(mat4.create(), radians, [0, 1, 0])
       const tcm = this.engine.getTransformManager()
       const inst = tcm.getInstance(this.entity)
-      tcm.setTransform(inst, transform)
+      tcm.setTransform(inst, this.trackball.getMatrix())
       inst.delete()
       this.renderer.render(this.swapChain, this.view)
-      window.requestAnimationFrame(this.render)
+      this.req = window.requestAnimationFrame(this.render)
+    } else {
+      if(this.req)
+        window.cancelAnimationFrame(this.req)
     }
 
   }
@@ -58,7 +64,7 @@ export class FilamentTriangle extends AbstractFilament {
   ib!: Filament.IndexBuffer
 
   constructor (ele:HTMLCanvasElement) {
-    super()
+    super(ele)
     // Object.assign(window, { glMatrix })
     this.canvas = ele
     badInit(['/triangle.filamat'], () => {
@@ -116,7 +122,7 @@ export class FilamentTriangle extends AbstractFilament {
       this.resize = this.resize.bind(this)
       window.addEventListener('resize', this.resize)
       this.running = true
-      window.requestAnimationFrame(this.render)
+      this.req = window.requestAnimationFrame(this.render)
     }, this.config, Filament)
   }
 
@@ -138,7 +144,7 @@ export class FilamentSuzanne extends AbstractFilament {
   ibl!: Filament.IndirectLight
 
   constructor (ele:HTMLCanvasElement) {
-    super()
+    super(ele)
     const env = 'venetian_crossroads_2k'
     const iblUrl = `/suzanne/${env}_ibl.ktx`
     const skyUrl = `/suzanne/${env}_skybox.ktx`
@@ -192,19 +198,6 @@ export class FilamentSuzanne extends AbstractFilament {
         Filament.WrapMode.CLAMP_TO_EDGE
       )
 
-      // Filament requests support for the following extensions, but none are guaranteed.
-      //   WEBGL_compressed_texture_s3tc, WEBGL_compressed_texture_s3tc_srgb
-      //   WEBGL_compressed_texture_astc, WEBGL_compressed_texture_etc
-      /**
-       * {
-        srgb: true,
-        formats: [
-          Filament.Texture$InternalFormat.DXT5_RGBA,
-          Filament.Texture$InternalFormat.DXT5_SRGBA,
-          Filament.Texture$InternalFormat.ETC2_EAC_SRGBA8
-        ]
-      }
-       */
       const albedo = engine.createTextureFromKtx1(albedoUrl, {
         srgb: true,
         formats: [
@@ -239,10 +232,8 @@ export class FilamentSuzanne extends AbstractFilament {
       this.resize = this.resize.bind(this)
       window.addEventListener('resize', this.resize)
       this.running = true
-      window.requestAnimationFrame(this.render)
+      this.req = window.requestAnimationFrame(this.render)
 
-      const trackball = new Trackball(this.canvas)
-      const mat = trackball.getMatrix()
       // console.info(`The 4x4 transform looks like: ${mat}.`)
     }, this.config, Filament)
   }
