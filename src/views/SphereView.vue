@@ -33,10 +33,10 @@ export default class SphereView extends Vue {
     view = new Viewer({
       // container: document.querySelector('#viewer'),
       container: 'viewer',
-      panorama: '/sphere.jpg',
+      panorama: '/sphere/sphere.jpg',
       // A text displayed in the navbar. If the navbar is disabled, the caption won't be visible.
       caption: `xxx <b> &copy; ${year}</b>`,
-      loadingImg: '/loader.gif',
+      loadingImg: '/sphere/loader.gif',
       // loadingImg: gif,
       // navbar: [],
       touchmoveTwoFingers: true,

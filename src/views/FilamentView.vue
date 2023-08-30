@@ -6,7 +6,8 @@
 <script lang="ts">
 import { Vue, Options } from 'vue-class-component'
 import { markRaw } from 'vue'
-import { FilamentEngine } from '@/utils/FilamentUtil'
+import { FilamentUsage } from '@/utils/BaseTypes'
+import { FilamentSuzanne, FilamentTriangle } from '@/utils/FilamentUtil'
 
 @Options({
   mounted () {
@@ -45,11 +46,11 @@ import { FilamentEngine } from '@/utils/FilamentUtil'
   }
 })
 export default class FilamentView extends Vue {
-  fe: FilamentEngine | undefined
+  fe: FilamentUsage | undefined
 
   build () {
     const canv:HTMLCanvasElement = document.querySelector('canvas#scene')!
-    this.fe = markRaw(new FilamentEngine(canv))
+    this.fe = markRaw(new FilamentSuzanne(canv))
   }
 
   destroy () {

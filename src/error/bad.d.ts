@@ -1,9 +1,4 @@
-import Filament, {
-  Engine,
-  EntityManager,
-  VertexAttribute,
-  Camera$Projection
-} from 'filament'
+import Filament from 'filament'
 
 /**
  * need emscripten document
@@ -24,10 +19,11 @@ export interface EmscriptenModuleConfig {
    * default 16777216
    */
   INITIAL_MEMORY?: number,
+  preInit?: (()=>void) | ([()=>void]),
   preRun?: [()=>void],
   postRun?: [()=>void],
   monitorRunDependencies?:any,
-  onAbort?:(any)=>void,
+  onAbort?: (error:Error)=>void,
 
   // can get
   getInheritedInstanceCount?: any,
@@ -38,5 +34,7 @@ export interface EmscriptenModuleConfig {
 
 export function badInit(assets: string[],
   onready: (() => void),
-  config: EmscriptenModuleConfig,
+  config: EmscriptenModuleConfig, //
   Filament: Filament): void
+
+export const DefaultConfig:EmscriptenModuleConfig

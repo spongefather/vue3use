@@ -15,20 +15,10 @@ import {
   FreeCamera,
   HemisphericLight,
   Vector3,
-  // CreateSphere,
-  CreateGround,
   ILoadingScreen,
   SceneLoader,
   WebGPUEngine,
   WebGPUEngineOptions
-  // AssetsManager,
-  // AbstractMesh,
-  // IParticleSystem,
-  // Skeleton,
-  // AnimationGroup,
-  // TransformNode,
-  // Geometry,
-  // Light
 } from '@babylonjs/core'
 import '@babylonjs/loaders'
 import '@babylonjs/inspector'
@@ -55,11 +45,10 @@ import '@babylonjs/inspector'
   }
 })
 export default class Babylon extends Vue {
-  ele: HTMLCanvasElement | null = null
-  engine:Engine | WebGPUEngine | null = null
+  ele!: HTMLCanvasElement
+  engine!:Engine | WebGPUEngine
 
   webGLInit () {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     this.ele = document.querySelector('canvas#scene')!
     const option:EngineOptions = {}
     this.engine = new Engine(this.ele, true, option, true)
@@ -67,7 +56,6 @@ export default class Babylon extends Vue {
   }
 
   async webGpuInit () {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     this.ele = document.querySelector('canvas#scene')!
     const option:WebGPUEngineOptions = {}
     const en = new WebGPUEngine(this.ele, option)
@@ -90,7 +78,7 @@ export default class Babylon extends Vue {
     const light = new HemisphericLight('mainlight', new Vector3(0, 20, 0), scene)
     light.intensity = 0.7
     // SceneLoader.Append 加载模型时，会有加载动画
-    SceneLoader.Append('/', 'City Apartment Building.glb', scene, (ts) => {
+    SceneLoader.Append('/ms/', 'City Apartment Building.glb', scene, (ts) => {
       this.engine?.loadingScreen.hideLoadingUI()
       // const config = { embedMode: true }
       scene.debugLayer.show()

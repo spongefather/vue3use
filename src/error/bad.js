@@ -1,10 +1,16 @@
+import { glMatrix, vec4, mat3 } from 'gl-matrix'
 /**
  * copy from filament.js
  * change some code
  */
-export function badInit (assets, onready, config, Filament, glMatrix) {
+export function badInit (assets, onready, config, Filament) {
+  // Module["vec4"] = vec4,should be nice
+  // make those global
+  window.glMatrix = glMatrix
+  window.vec4 = vec4
+  window.mat3 = mat3
   Filament.View = () => {
-    // cant find where is this ...
+    // cant find where is this ... maybe in wasm
   }
   if (onready) {
     Filament.onReadyListeners.push(onready)
@@ -17,8 +23,8 @@ export function badInit (assets, onready, config, Filament, glMatrix) {
 
   Filament.assets = {}
 
-  // ... error
   if (typeof glMatrix !== 'undefined') {
+    // console.log('get glMatrix success...')
     Filament.loadMathExtensions()
   }
 
@@ -35,8 +41,12 @@ export function badInit (assets, onready, config, Filament, glMatrix) {
   Filament.fetch(assets, null, taskFinished)
   Filament(config).then(m => {
     Filament = Object.assign(Filament, m)
-    // markRaw(Filament)
     Filament.loadClassExtensions()
     taskFinished()
   })
+}
+
+export const DefaultConfig = {
+  locateFile: () => '/filament.wasm',
+  noExitRuntime: false
 }

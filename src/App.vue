@@ -6,11 +6,17 @@
     <div class="load_text">FILE LOADING</div>
   </section>
   <nav>
-    | <router-link to="/">Home</router-link> |
-    <router-link to="/sphere">Sphere</router-link> |
-    <router-link to="/babylon">Babylon</router-link> |
-    <router-link to="/filament">Filament</router-link> |
-    <router-link to="/maps">Maps</router-link> |
+    <span>| </span>
+    <router-link to="/">Home</router-link>
+    <span> | </span>
+    <router-link to="/sphere">Sphere</router-link>
+    <span> | </span>
+    <router-link to="/babylon">Babylon</router-link>
+    <span> | </span>
+    <router-link to="/filament">Filament</router-link>
+    <span> | </span>
+    <router-link to="/maps">Maps</router-link>
+    <span> | </span>
   </nav>
   <router-view/>
 </template>
@@ -99,7 +105,7 @@ nav {
   height: 20px;
 }
 
-nav a {
+nav > a, nav > span  {
   font-weight: bold;
   color: #2c3e50;
 }

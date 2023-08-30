@@ -1,6 +1,5 @@
 <template>
   <div id="loadImg" :class="[visual?'shownZone':'hideZone']">
-    <!-- 添加图片 和 加载样式，参考 babylon 加载样式 -->
     <div class="loadText">{{ loadingUIText }}</div>
     <div class="loadLogo">
       <img alt="" src="../assets/babylon.svg" />
