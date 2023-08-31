@@ -35,6 +35,11 @@ const routes: Array<RouteRecordRaw> = [
         path: '/maps/cesium',
         name: 'cesium',
         component: () => import(/* webpackChunkName: "cesium" */ '../views/maps/CesiumView.vue')
+      },
+      {
+        path: '/maps/leaflet',
+        name: 'leaflet',
+        component: () => import(/* webpackChunkName: "leaflet" */ '../views/maps/LeafletView.vue')
       }
     ]
   }

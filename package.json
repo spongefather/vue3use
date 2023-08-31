@@ -23,6 +23,7 @@
     "filament": "1.41.0",
     "gl-matrix": "^3.4.3",
     "gltumble": "^1.0.1",
+    "leaflet": "^1.9.4",
     "three": "^0.155.0",
     "vue": "^3.2.13",
     "vue-class-component": "^8.0.0-0",
@@ -32,6 +33,7 @@
   "devDependencies": {
     "@photo-sphere-viewer/core": "^5.1.7",
     "@types/chai": "^4.2.15",
+    "@types/leaflet": "^1.9.3",
     "@types/mocha": "^8.2.1",
     "@types/three": "^0.155.0",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
