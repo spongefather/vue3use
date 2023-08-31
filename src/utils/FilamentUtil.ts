@@ -1,6 +1,6 @@
 import { badInit, EmscriptenModuleConfig, DefaultConfig } from '@/error/bad'
 import Filament from 'filament'
-// import { mat4 } from 'gl-matrix'
+import { mat4 } from 'gl-matrix'
 import { FilamentUsage } from './BaseTypes'
 import Trackball from 'gltumble'
 
@@ -25,6 +25,8 @@ abstract class AbstractFilament implements FilamentUsage {
 
   destroy () {
     this.running = false
+    if(this.req)
+      cancelAnimationFrame(this.req)
     // release this.trackball
     if (this.engine) {
       // this.engine ...
@@ -41,11 +43,12 @@ abstract class AbstractFilament implements FilamentUsage {
 
   render () {
     if(this.running) {
-      // const radians = Date.now() / 1000
-      // const transform = mat4.fromRotation(mat4.create(), radians, [0, 1, 0])
+      const radians = Date.now() / 1000
+      const transform = mat4.fromRotation(mat4.create(), radians, [0, 1, 0])
       const tcm = this.engine.getTransformManager()
       const inst = tcm.getInstance(this.entity)
-      tcm.setTransform(inst, this.trackball.getMatrix())
+      // tcm.setTransform(inst, this.trackball.getMatrix())
+      tcm.setTransform(inst, transform)
       inst.delete()
       this.renderer.render(this.swapChain, this.view)
       this.req = window.requestAnimationFrame(this.render)

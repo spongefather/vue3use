@@ -10,6 +10,9 @@ import { FilamentUsage } from '@/utils/BaseTypes'
 import { FilamentSuzanne, FilamentTriangle } from '@/utils/FilamentUtil'
 import Trackball from 'gltumble'
 
+/**
+ * TODO canvas 动态生成，避免资源问题
+ */
 @Options({
   mounted () {
     new Promise(
@@ -37,6 +40,7 @@ import Trackball from 'gltumble'
     new Promise(
       () => {
         this.destroy()
+        // step 2
         this.build()
       }
     ).catch(
