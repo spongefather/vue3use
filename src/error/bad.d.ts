@@ -20,6 +20,7 @@ export interface EmscriptenModuleConfig {
   asm?: any;
   /**
    * default 16777216
+   * 16M ?
    */
   INITIAL_MEMORY?: number;
   preInit?: (() => void) | [() => void];

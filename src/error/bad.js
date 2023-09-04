@@ -10,7 +10,7 @@ export function badInit (assets, onready, config, Filament) {
   window.vec4 = vec4
   window.mat3 = mat3
   Filament.View = () => {
-    // cant find where is this ... maybe in wasm
+    //from wasm
   }
   if (onready) {
     Filament.onReadyListeners.push(onready)

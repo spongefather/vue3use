@@ -34,9 +34,17 @@
     - The stand-aloneBabylon.js Viewer. 
     - 独立于3d的工具
 
+## Filament 使用
+
+> 测试模型加载等功能
+
 ## Google \<model-viewer\>
 
 > [文档](https://modelviewer.dev/docs/index.html)
+
+## 使用 A-Frame
+
+
 
 ## 全景组件 `photo-sphere-viewer`
 
@@ -79,8 +87,3 @@ The supported adapters are:
 ### cesium
 
 ### mapbox.js
-
-### 百度/谷歌/高德/思极等地图服务前端库
-
-## GIS 服务器
-
