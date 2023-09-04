@@ -1,0 +1,21 @@
+services:
+  mapserver:
+    image: docker.osgeo.org/geoserver:2.24.x
+    environment:
+      - INSTALL_EXTENSIONS=true
+      - STABLE_EXTENSIONS="vectortiles"
+      - COMMUNITY_EXTENSIONS="ogcapi-maps,ogcapi-styles"
+    ports:
+      - "8077:8080"
+    volumes:
+      - "gdata:/opt/geoserver_data"
+  front:
+    image: vue3use
+    build:
+      dockerfile: Dockerfile
+    ports:
+      - "8011:80"
+    links:
+      - "mapserver"
+volumes:
+  gdata: {}

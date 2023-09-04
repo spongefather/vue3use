@@ -24,5 +24,13 @@ module.exports = defineConfig({
         },
       ],
     }))
+  },
+  devServer: {
+    proxy: {
+      '/geoserver': {
+        target: 'http://localhost:8077',
+        changeOrigin: true
+      }
+    }
   }
 })

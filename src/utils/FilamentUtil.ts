@@ -32,6 +32,9 @@ abstract class AbstractFilament implements FilamentUsage {
       // this.engine ...
       Filament.Engine.destroy(this.engine)
     }
+    // this.config.ctx.canvas.width = 0
+    // this.config.ctx.canvas.height = 0
+    // this.config.ctx.clear(1)
     Object.assign(Filament, { initialized: false })
     // clean Module config
     this.config = DefaultConfig()
