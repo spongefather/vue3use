@@ -15,6 +15,10 @@
     <span> | </span>
     <router-link to="/filament">Filament</router-link>
     <span> | </span>
+    <router-link to="/aframe">AFrame</router-link>
+    <span> | </span>
+    <router-link to="/mvpage">ModelView</router-link>
+    <span> | </span>
     <router-link to="/maps">Maps</router-link>
     <span> | </span>
   </nav>

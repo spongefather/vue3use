@@ -18,7 +18,8 @@ export default class LeafletView extends Vue {
   build() {
     const map = L.map('map_leaf', {
       center: new LatLng(43.806958, 87.57306),
-      zoom: 5
+      zoom: 5,
+      crs: CRS.EPSG4326
     })
 
     // geoserver ne world map
@@ -46,7 +47,7 @@ export default class LeafletView extends Vue {
     tileLayer.wms(url, {
       crs: CRS.EPSG4326,
       layers: 'ne:boundary_lines',
-      styles: '',
+      styles: 'line',
       format: 'image/png',
       version: '1.3.0',
       uppercase: true,

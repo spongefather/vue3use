@@ -26,6 +26,16 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import(/* webpackChunkName: "fmview" */ '../views/FilamentView.vue')
   },
   {
+    path: '/aframe',
+    name: 'aframe',
+    component: () => import(/* webpackChunkName: "afview" */ '../views/AFrameView.vue')
+  },
+  {
+    path: '/mvpage',
+    name: 'mvpage',
+    component: () => import(/* webpackChunkName: "mvview" */ '../views/ModelViewerPage.vue')
+  },
+  {
     path: '/maps',
     name: 'maps',
     redirect: '/maps/cesium',

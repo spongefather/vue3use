@@ -19,6 +19,8 @@
     "@babylonjs/post-processes": "^6.17.0",
     "@babylonjs/procedural-textures": "^6.17.0",
     "@babylonjs/serializers": "^6.17.0",
+    "@google/model-viewer": "^3.2.1",
+    "aframe": "^1.4.2",
     "core-js": "^3.8.3",
     "filament": "1.41.0",
     "gl-matrix": "^3.4.3",

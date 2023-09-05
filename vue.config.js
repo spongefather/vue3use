@@ -6,6 +6,17 @@ module.exports = defineConfig({
   lintOnSave: false,
   // emscripten use require fs path ...
   // webpack 5 use like import('node:fs')
+  chainWebpack: config => {
+    config.module
+    .rule('vue')
+    .use('vue-loader')
+    .tap(options => ({
+      ...options,
+      compilerOptions: {
+        isCustomElement: tag => tag.startsWith('a-') || tag.startsWith('model-viewer')
+      }
+    }))
+  },
   configureWebpack: (config) => {
     const fb = config.resolve.fallback || {}
     Object.assign(fb, {

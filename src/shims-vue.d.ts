@@ -5,6 +5,11 @@ declare module '*.vue' {
   export default component
 }
 
+declare module 'aframe' {
+  const aframe: ()=>void
+  export default aframe
+}
+
 declare module 'gltumble' {
   import type { mat4 } from 'gl-matrix'
   /**
