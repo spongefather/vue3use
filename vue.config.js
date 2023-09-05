@@ -4,8 +4,6 @@ const CopyPlugin = require('copy-webpack-plugin')
 module.exports = defineConfig({
   transpileDependencies: true,
   lintOnSave: false,
-  // emscripten use require fs path ...
-  // webpack 5 use like import('node:fs')
   chainWebpack: config => {
     config.module
     .rule('vue')
@@ -17,6 +15,8 @@ module.exports = defineConfig({
       }
     }))
   },
+  // emscripten use require fs path ...
+  // webpack 5 use like import('node:fs')
   configureWebpack: (config) => {
     const fb = config.resolve.fallback || {}
     Object.assign(fb, {

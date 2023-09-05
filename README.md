@@ -42,9 +42,13 @@
 
 > [文档](https://modelviewer.dev/docs/index.html)
 
+> 基于 threejs
+
 ## 使用 A-Frame
 
 > [Introduction](https://aframe.io/docs/master/introduction/)
+
+> 基于threejs
 
 
 ## 全景组件 `photo-sphere-viewer`
