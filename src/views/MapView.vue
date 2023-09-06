@@ -17,10 +17,10 @@
 <style>
 .maps,.container{
   width: 100%;
-  height: calc(100% - 80px);
+  height: calc(100% - 50px);
 }
 .maps nav {
   height: 20px;
-  padding: 30px;
+  padding: 0 0 30px;
 }
 </style>
