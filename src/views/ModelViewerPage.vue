@@ -3,7 +3,7 @@
     <model-viewer
       class="container"
       alt="test"
-      src="/ms/Bee.glb"
+      src="/ms/model.glb"
       ar
       shadow-intensity="1"
       camera-controls

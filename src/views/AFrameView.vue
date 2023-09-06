@@ -5,8 +5,7 @@
         <a-asset-item id="centermodel" src="/ms/Bee.glb"></a-asset-item>
       </a-assets> -->
       <a-entity
-        gltf-model="/ms/Bee.glb"
-        animation-mixer
+        gltf-model="/ms/model.glb"
         position="0 0 0"
       >
       </a-entity>
