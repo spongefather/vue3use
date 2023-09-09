@@ -10,8 +10,10 @@ import { Options, Vue } from 'vue-class-component'
 import * as THREE from 'three'
 
 let end = false
-let scene:THREE.Scene, camera:THREE.PerspectiveCamera, render:THREE.WebGLRenderer, geometry, material
-let frame:number
+let scene:THREE.Scene,
+  camera:THREE.PerspectiveCamera,
+  render:THREE.WebGLRenderer,
+  frame:number
 
 @Options({
   props: {
@@ -47,18 +49,26 @@ export default class HelloWorld extends Vue {
     render = new THREE.WebGLRenderer()
     render.setSize(width, height)
     document.getElementById('view')?.appendChild(render.domElement)
-    geometry = new THREE.BoxGeometry(3, 3, 3)
-    material = new THREE.MeshBasicMaterial({ color: 0x291785 })
-    const cube = new THREE.Mesh(geometry, material)
+    const geometry = new THREE.BoxGeometry(100, 100, 100)
+    const materials = [
+      new THREE.MeshBasicMaterial({ color: 0x00bf22 }),
+      new THREE.MeshBasicMaterial({ color: 0xd32200 }),
+      new THREE.MeshBasicMaterial({ color: 0xd2ac22 }),
+      new THREE.MeshBasicMaterial({ color: 0x22cda6 }),
+      new THREE.MeshBasicMaterial({ color: 0xb23410 }),
+      new THREE.MeshBasicMaterial({ color: 0x01bc56 }),
+    ]
+    const cube = new THREE.Mesh(geometry, materials)
     scene.add(cube)
-    camera.position.z = 5
+    camera.position.z = 160
     const rende = function () {
       if (end) {
+        cancelAnimationFrame(frame)
         return
       }
       frame = requestAnimationFrame(rende)
-      cube.rotation.x += 0.01
-      cube.rotation.y += 0.01
+      // cube.rotation.x += 0.01
+      // cube.rotation.y += 0.01
       render.render(scene, camera)
     }
     end = false

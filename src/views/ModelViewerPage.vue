@@ -9,8 +9,6 @@
       camera-controls
       touch-action="pan-y"
     >
-    <!-- environment-image="shared-assets/environments/moon_1k.hdr"
-      poster="shared-assets/models/NeilArmstrong.webp" -->
     </model-viewer>
   </div>
 </template>

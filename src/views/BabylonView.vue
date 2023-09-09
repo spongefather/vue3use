@@ -21,7 +21,7 @@ import {
   WebGPUEngineOptions
 } from '@babylonjs/core'
 import '@babylonjs/loaders'
-import '@babylonjs/inspector'
+import '@babylonjs/inspector' // babylonjs-social-twitter png from babylon
 
 @Options({
   components: {
@@ -31,7 +31,11 @@ import '@babylonjs/inspector'
   mounted () {
     // resolve, reject
     new Promise(() => {
-      this.webGLInit()
+      if ( navigator.gpu ){
+        this.webGpuInit()
+      }else {
+        this.webGLInit()
+      }
     })
       .catch((e) => { console.log('error', e) })
       .then((re) => { console.log('inited .', re) })
@@ -57,7 +61,16 @@ export default class Babylon extends Vue {
 
   async webGpuInit () {
     this.ele = document.querySelector('canvas#scene')!
-    const option:WebGPUEngineOptions = {}
+    const option:WebGPUEngineOptions = {
+      glslangOptions: {
+        jsPath: '/babylon/glslang.js',
+        wasmPath: '/babylon/glslang.wasm'
+      },
+      twgslOptions:{
+        jsPath: '/babylon/twgsl.js',
+        wasmPath: '/babylon/twgsl.wasm'
+      }
+    }
     const en = new WebGPUEngine(this.ele, option)
     await en.initAsync()
     this.engine = en
