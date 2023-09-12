@@ -1,13 +1,16 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <div id="view"></div>
+    <div id="view">
+      <canvas id="threecanv"></canvas>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import * as THREE from 'three'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
 let end = false
 let scene:THREE.Scene,
@@ -46,9 +49,18 @@ export default class HelloWorld extends Vue {
     const height = ele?.clientHeight ?? 1
     scene = new THREE.Scene()
     camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000)
-    render = new THREE.WebGLRenderer()
+    const cv: HTMLCanvasElement = document.querySelector('#threecanv')!
+    render = new THREE.WebGLRenderer({
+      canvas: cv,
+      antialias: true,
+      alpha: true,
+      precision: 'highp',
+      depth: true,
+      preserveDrawingBuffer: true,
+      logarithmicDepthBuffer: true
+    })
     render.setSize(width, height)
-    document.getElementById('view')?.appendChild(render.domElement)
+    const controls = new OrbitControls( camera, cv )
     const geometry = new THREE.BoxGeometry(100, 100, 100)
     const materials = [
       new THREE.MeshBasicMaterial({ color: 0x00bf22 }),
@@ -60,15 +72,19 @@ export default class HelloWorld extends Vue {
     ]
     const cube = new THREE.Mesh(geometry, materials)
     scene.add(cube)
+    camera.position.x = 10
+    camera.position.y = 10
     camera.position.z = 160
+    controls.autoRotate = true
+    // ...other
+    controls.update()
     const rende = function () {
       if (end) {
         cancelAnimationFrame(frame)
         return
       }
       frame = requestAnimationFrame(rende)
-      // cube.rotation.x += 0.01
-      // cube.rotation.y += 0.01
+      controls.update()
       render.render(scene, camera)
     }
     end = false
@@ -86,20 +102,13 @@ export default class HelloWorld extends Vue {
 #view {
   height: calc(100% - 40px);
   width: 100%;
+  background-color: #80808099;
+}
+#threecanv {
+  display: block;
 }
 h1 {
   margin: 0;
   height: 40px;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
 }
 </style>
