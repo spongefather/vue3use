@@ -68,4 +68,6 @@ export function badInit(
   Filament: Filament
 ): void;
 
-export function DefaultConfig(): EmscriptenModuleConfig;
+export function DefaultConfig(): EmscriptenModuleConfig
+
+export function initWorldWind()

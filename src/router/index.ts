@@ -50,6 +50,11 @@ const routes: Array<RouteRecordRaw> = [
         path: '/maps/leaflet',
         name: 'leaflet',
         component: () => import(/* webpackChunkName: "leaflet" */ '../views/maps/LeafletView.vue')
+      },
+      {
+        path: '/maps/worldwind',
+        name: 'worldwind',
+        component: () => import(/* webpackChunkName: "wwwview" */ '../views/maps/WorldWindView.vue')
       }
     ]
   }
