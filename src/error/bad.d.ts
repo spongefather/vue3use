@@ -70,4 +70,6 @@ export function badInit(
 
 export function DefaultConfig(): EmscriptenModuleConfig
 
-export function initWorldWind()
+export function initWorldWind(canvasid:string, range:number): any
+
+export function destroyWorldWind(www:any): void
