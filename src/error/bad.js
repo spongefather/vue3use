@@ -85,8 +85,8 @@ export function initWorldWind(canvasid, range) {
   var layers = [
       // Imagery layers. StarFieldLayer
       {layer: star, enabled: true},
-      {layer: new WorldWind.BMNGLayer(), enabled: true},
-      {layer: new WorldWind.BingAerialWithLabelsLayer(null), enabled: true},
+      {layer: new WorldWind.BMNGLayer(), enabled: false},
+      {layer: new WorldWind.BingAerialWithLabelsLayer(null), enabled: false},
       // Add atmosphere layer on top of all base layers.
       {layer: atmo, enabled: true},
       // WorldWindow UI layers.
@@ -153,7 +153,34 @@ export function initWorldWind(canvasid, range) {
     atmo.time = date
   }, 1000);
 
+  const url = "/geoserver/ne/wms?SERVICE=WMS&REQUEST=GetCapabilities&VERSION=1.3.0"
+
+  requestWms(url,'countries', wwd)
+  requestWms(url,'populated_places', wwd)
+  requestWms(url,'coastlines', wwd)
+  requestWms(url,'boundary_lines', wwd)
   return { engine: wwd , interval}
+}
+
+function requestWms(url, name, wwd) {
+  fetch(url)
+  .then(resp => resp.text())
+  .then(text => {
+    // TODO ...
+    const value = text.replaceAll('http://localhost:8077/','/')
+    return new DOMParser().parseFromString(value, "text/xml")
+  })
+  .then(
+    dom => {
+      const wms = new WorldWind.WmsCapabilities(dom)
+      const wmsLayerCapabilities = wms.getNamedLayer(name)
+      const wmsConfig = WorldWind.WmsLayer.formLayerConfiguration(wmsLayerCapabilities)
+      const wmsLayer = new WorldWind.WmsLayer(wmsConfig)
+      wwd.addLayer(wmsLayer)
+    }
+  ).catch(reason => {
+    console.log(reason)
+  })
 }
 
 export function destroyWorldWind(www) {

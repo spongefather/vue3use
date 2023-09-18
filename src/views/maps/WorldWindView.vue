@@ -13,6 +13,7 @@ import { initWorldWind, destroyWorldWind } from '@/error/bad'
 require('@/assets/worldwind.min.js')
 
 /**
+ * use WebWorldWind
  * simple use for worldwind ...
  * TODO be module and types ...
  */

@@ -38,7 +38,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/maps',
     name: 'maps',
-    redirect: '/maps/cesium',
+    redirect: '/maps/leaflet',
     component: MapView,
     children: [
       {
