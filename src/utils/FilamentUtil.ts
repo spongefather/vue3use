@@ -1,6 +1,6 @@
 import { badInit, EmscriptenModuleConfig, DefaultConfig } from '@/error/bad'
 import Filament from 'filament'
-import { mat4 } from 'gl-matrix'
+import { mat4, ReadonlyVec3 } from 'gl-matrix'
 import { FilamentUsage } from './BaseTypes'
 import Trackball from 'gltumble'
 
@@ -16,6 +16,7 @@ abstract class AbstractFilament implements FilamentUsage {
   trackball: Trackball
   running = false
   req: number| undefined
+  rotation:ReadonlyVec3 = [0, 1, 0]
 
   constructor (ele:HTMLCanvasElement, tb: Trackball) {
     // do something ...
@@ -47,7 +48,7 @@ abstract class AbstractFilament implements FilamentUsage {
   render () {
     if(this.running) {
       const radians = Date.now() / 1000
-      const transform = mat4.fromRotation(mat4.create(), radians, [0, 1, 0])
+      const transform = mat4.fromRotation(mat4.create(), radians, this.rotation)
       const tcm = this.engine.getTransformManager()
       const inst = tcm.getInstance(this.entity)
       // tcm.setTransform(inst, this.trackball.getMatrix())
@@ -105,12 +106,11 @@ export class FilamentTriangle extends AbstractFilament {
 
       this.ib.setBuffer(this.engine, new Uint16Array([0, 1, 2]))
 
-      // version wrong ...
-      // const mat = this.engine.createMaterial('/triangle.filamat')
-      // const matinst = mat.getDefaultInstance()
+      const mat = this.engine.createMaterial('/triangle.filamat')
+      const matinst = mat.getDefaultInstance()
       Filament.RenderableManager.Builder(1)
         .boundingBox({ center: [-1, -1, -1], halfExtent: [1, 1, 1] })
-        // .material(0, matinst)
+        .material(0, matinst)
         .geometry(0, Filament.RenderableManager$PrimitiveType.TRIANGLES, this.vb, this.ib)
         .build(this.engine, this.entity)
 
@@ -125,7 +125,7 @@ export class FilamentTriangle extends AbstractFilament {
       this.view.setScene(this.scene)
 
       this.renderer.setClearOptions({ clearColor: [0.0, 0.1, 0.2, 1.0], clear: true })
-
+      this.rotation = [0, 0, 1]
       this.resize()
       this.render = this.render.bind(this)
       this.resize = this.resize.bind(this)
